@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="javascripts/page.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row" style="background-color:rgba(0,0,0,0.3); margin-right : 0px; margin-left:0px; color:white;">     
+                <div class="nav navbar-nav navbar-right" style="margin-right : 5px;">
+                    <li><a href='#'> Your actual Name </a></li>     
+                </div>
+                <div class="container text-left" style ="margin-left:0px">
+                    <h4><img src = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Yonina_Tulip.jpg" class="test" style="padding:5px;">Nickname</h4>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-inverse">
+                <h2> Available Chat Rooms </h2>
+                <li><a data-toggle="modal" href="#chooseName">Change
+                            Password<span style="font-size: 16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span>
+                    </a></li>
+            </nav>
+
+            <div class ="row" style="background-color:rgba(0,0,0,);text-align:center; padding:20px; margin-left:0px;margin-right:0px; border:1px solid rgba(0,0,0,0.0)">
+                <form class="form-horizontal">
+                    <div class="form-group form-group-sm">
+                        <div class="col-sm-5" style="margin-right:0px;">
+                            <input type="text" class="form-control border" id="email" placeholder="Create ChatRoom">
+                        </div>
+                        <div class="col-sm-2 col-sm-offset-5">
+                            <a type="submit" class="btn btn-danger border  btn-md">CreateRoom</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="roomdiv">
+                <div class="row text-center" style="padding:0px; padding-bottom:20px;margin:0 auto">
+                    <div class="col-sm-4">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQvp2BfK3GLL6Dt0jSMOFv4Hv6NjMENnMedstBzEsjFNXOTpqf2erYle5z"><hr>
+                        <h1> Friends</h1>                  
+                    </div>
+                    <div class="col-sm-4">
+                       <img src="http://cdn.hercampus.com/s3fs-public/2016/12/11/News.jpg"><hr>
+                        <h1> News</h1>     
+                        
+                    </div>
+                    <div class= "col-sm-4">
+                        <img src="http://www.jwmorris.co.uk/wp-content/uploads/2015/08/Science-Technology-banner-1500x585.jpg"><hr>
+                        <h1> Science </h1>
+                    </div>       
+                </div>  
+
+                 <div class="row text-center" style="padding:0px; padding-bottom:20px;margin:0 auto">
+                    <div class="col-sm-4">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQvp2BfK3GLL6Dt0jSMOFv4Hv6NjMENnMedstBzEsjFNXOTpqf2erYle5z"><hr>
+                        <h1> Family</h1>                  
+                    </div>
+                    <div class="col-sm-4">
+                       <img src="http://cdn.hercampus.com/s3fs-public/2016/12/11/News.jpg"><hr>
+                        <h1> Events</h1>     
+                        
+                    </div>
+                    <div class= "col-sm-4">
+                        <img src="http://www.jwmorris.co.uk/wp-content/uploads/2015/08/Science-Technology-banner-1500x585.jpg"><hr>
+                        <h1> Technology </h1>
+                    </div>       
+                </div>  
+            </div> 
+
+            <div class="footer">
+
+                <p class="small" style="padding:15px; font-size: 18px;"> All rights reserved. &copy; Shurakshya Kharel
+                </p>
+            </div>
+
+
+<!-- Start of the modal for changing name -->
+
+            <div class="modal fade" id="chooseName" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding: 35px 50px;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4>
+                                <span class="glyphicon glyphicon-lock"></span> Choose Name
+                            </h4>
+                        </div>
+                        <div class="modal-body" style="padding: 40px 50px;">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="oldpwd"><span
+                                        class="glyphicon glyphicon-eye-open"></span> Old Name</label> <input
+                                        type="text" class="form-control" id="oldpwd">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newpwd"><span
+                                        class="glyphicon glyphicon-eye-open"></span> New Name</label> <input
+                                        type="text" class="form-control" id="newpwd">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newpwdmatch"><span
+                                        class="glyphicon glyphicon-eye-open"></span> Confirm NewName</label>
+                                    <input type="text" class="form-control" id="newpwdmatch">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block">
+                                    <span class="glyphicon glyphicon-off"></span> Save
+                                </button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit"
+                                class="btn btn-danger btn-default pull-left"
+                                data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove"></span> Cancel
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+    <!--End of the modal -->
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,172 @@
+body {
+  	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-image: url("http://cdn3.bigcommerce.com/r-2f88f07c87a534f827280ca29dcbb47af013d2e2/themes/GreaseMonkey/images/bg.jpg");
+	background-color:rgba(255, 255,255, 0.5);
+}
+
+.container-fluid{
+	width:90%; 
+	border-top : 4px solid black;
+	border-radius: 0px;
+	padding-right : 0px !important;
+	padding-left: 0px !important;
+	margin: auto;
+
+
+}
+
+.nav>li>a 
+{
+	padding :5px 5px;
+	font-size: 18px;
+	color:white;
+
+}
+
+a {
+	color:#E23232;
+	
+}
+
+/* mouse over link */
+/*a:hover {
+    color: red;
+    
+    
+}*/
+
+.test {
+	position: relative;
+	width: 60px;
+	height: 60px;
+	background: transparent !important;
+	padding: 10px;
+	border-radius: 100%;
+	color: white;
+	text-align: center
+}
+
+h1 {
+  	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	color: white;
+	font-size: 38px;
+}
+
+h2 {
+	text-align:center;
+	color:white;
+	text-shadow: 1px 1px #FF0000;
+	
+}
+
+.a{
+		color : white;
+		font-family: 'Raleway', serif;
+	
+	}
+
+a {
+  color: #00B7FF;
+}
+
+.navbar-inverse{
+	background-color: transparent !important;
+	border-bottom: transparent !important;
+	border-top: 1px solid black;
+	border-left: 0px !important;
+	border-right: 0px !important;
+	border-radius: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+
+.col-sm-4 {
+	background-color:rgba(0,0,0,0.1);
+	font-style: italic;
+	color:#b3b3b3;
+	width: 30% !important;
+	margin: 1.5%;
+	padding-top: 10px;
+	border-right: 2px;
+}
+img{
+	
+	height: 150px;
+	width:95%;
+}
+
+hr{
+	margin: 0 auto;
+	width: 100%;
+}
+
+#roomdiv{
+	background-color:rgba(0,0,0,0.5); 
+	padding:20px;
+        font-style: italic;
+	color:#b3b3b3;
+	
+
+}
+.footer{
+	margin-top: 20px;
+	background-color:#333333; 
+	padding:20px;
+        font-style: italic;
+	color:#b3b3b3;
+	text-align: center;	
+
+}
+.small{
+	font-size: 18px;
+}
+
+
+
+/*footer{
+	background-color:#333333; 
+	text-align:center;
+	height:150px; 
+	padding:0px;
+	color: #fff;
+	bottom: 0;
+	position: fixed;
+	width : 100% ;
+}*/
+
+/*.well{
+	background: white !important;
+	border: white 2px 2px !important;
+
+}
+.jumbotron{
+	padding: 10px 10px !important;
+	margin: 0;
+	height: 520px;
+	min-height: 350px;
+	width: 100%;
+}
+#chat_div{
+	position: relative;
+	height: 400px;
+	background-color: white;
+	border: 2px solid gray;
+}
+#chat_form{
+	position: absolute;
+	bottom: 40px;
+	width: 80% !important;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto !important;
+
+}
+#message_input{
+	width: 90% !important;
+	display: inline;
+}
+#send_message_button{
+	display: inline;
+}*/
