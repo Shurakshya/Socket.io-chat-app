@@ -123,6 +123,18 @@ hr{
 	font-size: 18px;
 }
 
+#hiding{
+	width: 25%;
+	background-color: white;
+	z-index: 1;
+	position: absolute;
+}
+.head{
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
+}
+
 
 
 /*footer{

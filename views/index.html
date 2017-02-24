@@ -18,34 +18,69 @@
                     <li><a href='#'> Your actual Name </a></li>     
                 </div>
                 <div class="container text-left" style ="margin-left:0px">
-                    <h4><img src = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Yonina_Tulip.jpg" class="test" style="padding:5px;">Nickname</h4>
+                    <h4><img src = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Yonina_Tulip.jpg" class="test" style="padding:5px;"><span id="nickname"> Nickname</span></h4>
                 </div>
             </div>
 
             <nav class="navbar navbar-inverse">
                 <h2> Available Chat Rooms </h2>
-                <li><a data-toggle="modal" href="#chooseName">Change
-                            Password<span style="font-size: 16px;"
-                            class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span>
-                    </a></li>
             </nav>
 
+            <div class="popover-markup"> 
+                <a href="#" id="changeName" class="trigger btn btn-primary" style="margin-bottom: 10px;">Change Name</a> 
+            <div id="hiding" style="display:none; border: 1px solid rgba(0,0,0,0.3);border-radius: 4px;">
+                <div class="head" style = "padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.3);border-width:100%;margin:10px;">
+                    <span class="glyphicon glyphicon-lock"></span>Change Name
+                </div>
+                    <div class="content" style="margin: 10px;">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="name">
+                                    <span class="glyphicon glyphicon-eye-open" ></span> New Name
+                                </label> 
+                                <input type="text" class="form-control" id="a">
+                            </div>
+                            <div class="form-group">
+                                <label for="nameMatch">
+                                    <span class="glyphicon glyphicon-eye-open" ></span> Confirm NewName
+                                </label>
+                                <input type="text" class="form-control" id="b">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block" id="changeNameButton">
+                                    <span class="glyphicon glyphicon-off" ></span> Submit
+                            </button>
+                        </form>
+                    </div>
+            </div> 
+        </div>
+            <!-- popove closes here -->
+
+            <!-- Create new Room div -->
+
             <div class ="row" style="background-color:rgba(0,0,0,);text-align:center; padding:20px; margin-left:0px;margin-right:0px; border:1px solid rgba(0,0,0,0.0)">
-                <form class="form-horizontal">
+                <form class="form-horizontal" role="form">
+                    <div class="alert alert-danger" style="display:none;width:40%;" id="roomerror"></div>
                     <div class="form-group form-group-sm">
                         <div class="col-sm-5" style="margin-right:0px;">
-                            <input type="text" class="form-control border" id="email" placeholder="Create ChatRoom">
+                            <input type="text" class="form-control border" id="newroomName" placeholder="Create ChatRoom">
                         </div>
                         <div class="col-sm-2 col-sm-offset-5">
-                            <a type="submit" class="btn btn-danger border  btn-md">CreateRoom</a>
+                            <button type="submit" class="btn btn-danger border btn-md" id="createRoom">CreateRoom</button>
                         </div>
                     </div>
                 </form>
             </div>
 
+
+            <!-- Chat room divs -->
+
             <div id="roomdiv">
+
+                <div class="row" id="roomappend" style="padding:0px; padding-bottom:20px;margin:0 auto" >
+                    <!-- append created room here -->
+                </div> 
                 <div class="row text-center" style="padding:0px; padding-bottom:20px;margin:0 auto">
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" id="eachroom">
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQvp2BfK3GLL6Dt0jSMOFv4Hv6NjMENnMedstBzEsjFNXOTpqf2erYle5z"><hr>
                         <h1> Friends</h1>                  
                     </div>
@@ -74,8 +109,11 @@
                         <img src="http://www.jwmorris.co.uk/wp-content/uploads/2015/08/Science-Technology-banner-1500x585.jpg"><hr>
                         <h1> Technology </h1>
                     </div>       
-                </div>  
+                </div> 
+                
             </div> 
+
+            <!-- end of chat room divs -->
 
             <div class="footer">
 
@@ -86,7 +124,7 @@
 
 <!-- Start of the modal for changing name -->
 
-            <div class="modal fade" id="chooseName" role="dialog">
+            <div class="modal fade" id="nameModal" role="dialog">
                 <div class="modal-dialog">
 
                     <!-- Modal content-->
@@ -98,24 +136,20 @@
                             </h4>
                         </div>
                         <div class="modal-body" style="padding: 40px 50px;">
+                            <div class="alert alert-danger" id="formError" style="display:none"></div>
                             <form role="form">
                                 <div class="form-group">
-                                    <label for="oldpwd"><span
-                                        class="glyphicon glyphicon-eye-open"></span> Old Name</label> <input
-                                        type="text" class="form-control" id="oldpwd">
+                                    <label for="name"><span
+                                        class="glyphicon glyphicon-eye-open"></span> New Name</label> 
+                                        <input type="text" class="form-control" id="name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="newpwd"><span
-                                        class="glyphicon glyphicon-eye-open"></span> New Name</label> <input
-                                        type="text" class="form-control" id="newpwd">
-                                </div>
-                                <div class="form-group">
-                                    <label for="newpwdmatch"><span
+                                    <label for="nameMatch"><span
                                         class="glyphicon glyphicon-eye-open"></span> Confirm NewName</label>
-                                    <input type="text" class="form-control" id="newpwdmatch">
+                                    <input type="text" class="form-control" id="nameMatch">
                                 </div>
-                                <button type="submit" class="btn btn-success btn-block">
-                                    <span class="glyphicon glyphicon-off"></span> Save
+                                <button type="submit" class="btn btn-success btn-block" id="saveName">
+                                    <span class="glyphicon glyphicon-off" ></span> Save
                                 </button>
                             </form>
                         </div>
@@ -131,10 +165,7 @@
 
                 </div>
             </div>
-
-
     <!--End of the modal -->
-
         </div>
     </body>
 </html>
