@@ -15,6 +15,7 @@ $(document).ready(function(){
 
 		/*if user not set */ 
 		$('#nameModal').modal('show');
+		$("#nickname").html("Please Login !!!");
 
 		/* Name save when button click */
 		$('#saveName').click(function(){
@@ -147,6 +148,8 @@ $(document).ready(function(){
 	});
 
 	$(".row").on('click','.col-sm-4', function(){
+		//var url =  $(this).attr('href');
+    	// $('#chatdiv').load('../../views/chatroom.html');
 		var roomName = $(this).find('h1').text();
 		if(user){	
 			socket.emit('joinRoom', roomName);
@@ -156,34 +159,49 @@ $(document).ready(function(){
 	});
 
 
-	/* Chat start from here in individual room */ 
+	/* logout   */
+	// if(user && localStorage.getItem('user')!=null){
+		$("#logout").click(function(){
+			
+				localStorage.removeItem('user');
+				socket.emit("deleteSession",user);
+				window.location.href = "http://localhost:3000";
 
-	var url = window.location.href;
-	var roomid = (url.split('/room/')[1].replace(/\s/g, ''));
 
-	socket.emit('inRoom', roomid);
-
-	socket.on('usersInCurrentRoom', function(users){
-		users.forEach(function(eachuser){
-			$('#onlineUsers').append("<li>" + eachuser + "</li>");
 		});
+	// }else{
+	// 	$(this).hide();
+	// }
 
 
-	});
+	// /* Chat start from here in individual room */ 
 
-	$('#form').submit(function(){
-		var input = $('#message_input').val();
-		if(input){
-			socket.emit('message', input);
-		}
-		$('#message_input').val('');
-		return false;
-	});
+	// var url = window.location.href;
+	// var roomid = (url.split('/room/')[1].replace(/\s/g, ''));
 
-	socket.on('chat' , function(message){
-		$('#chat_div').append(message);
-		console.log(message);
-	});
+	// socket.emit('inRoom', roomid);
+
+	// socket.on('usersInCurrentRoom', function(users){
+	// 	users.forEach(function(eachuser){
+	// 		$('#onlineUsers').append("<li>" + eachuser + "</li>");
+	// 	});
+
+
+	// });
+
+	// $('#form').submit(function(){
+	// 	var input = $('#message_input').val();
+	// 	if(input){
+	// 		socket.emit('message', input);
+	// 	}
+	// 	$('#message_input').val('');
+	// 	return false;
+	// });
+
+	// socket.on('chat' , function(message){
+	// 	$('#chat_div').append(message);
+	// 	console.log(message);
+	// });
 
 
 

@@ -1,9 +1,13 @@
 var http = require('http').Server();
 var io = require('socket.io')(http);
-
+var moment = require('moment');
+var fs=require('fs');
 var usersInCurrentRoom = []; //all the users in connected rooms  
 var users=[];
 var rooms = ["friends", "news", "science", "family", "events", "technology"];
+
+var createdFiles=[];
+
 var client = 0;
 var joinedRooms = []; //rooms user has joined
 var createdRoom =[]; //room create by user
@@ -75,21 +79,68 @@ io.on('connection', function(socket){
 
 	});
 
+//When user is inside room
+	socket.on("inRoom", function(roomid,user) {
+		var room = findRoomById(roomid);
+		socket.username=user;
+		socket.join(room);
+		socket.room=room;
+		console.log("room in : "+socket.room+" user : "+socket.username);
+		socket.emit("usersInCurrentRoom", usersInCurrentRoom);
 
-	/*when the user is inside the room */ 
-	socket.on('inRoom', function(roomid){
-		socket.emit('usersInCurrentRoom', usersInCurrentRoom);
+
+		/* read file line by line */
+		
+		var path=roomid+".txt";
+		if (fs.existsSync(path)) {
+		    fs.readFile(path, function(err, f){
+		    	var array = f.toString().split('\n');
+		    	socket.emit("previousMessage",array);
+		    
+			});
+		}else{
+			console.log("file not found.");
+		}
+
 	});
 
-	/* chat inside chat rooms */
 
-	socket.on('message' , function(message){
-		io.to(socket.room).emit('chat' , {
-			sender  : socket.username,
-			message : message,
-			date    : Date.now()
+	// /* chat inside chat rooms */
+	// socket.on('message',function(message){
+	// 	socket.emit('chat', message);
+
+	// });
+
+
+	/* chat in rooms */
+	socket.on("message", function(message,roomid) {
+
+		var room = findRoomById(roomid);
+		console.log("room in : "+socket.room+" user : "+socket.username);
+		console.log(room + " : " + message);
+		io.in(socket.room).emit("chat", {
+			message: message,
+			user: socket.username,
+			date: moment().valueOf() //date: moment(new Date()).format('YYYY-MM-DD, hh:mm a')
+
 		});
 	});
+
+	socket.on("saveMessage",function(message,roomid){
+		var logger = fs.createWriteStream(roomid+'.txt', {
+		  	flags: 'a' // 'a' means appending (old data will be preserved)
+		});
+		logger.write(message+'\n');
+		createdFiles.push(roomid+'.txt');
+
+	});
+	// socket.on('message' , function(message){
+	// 	io.to(socket.room).emit('chat' , {
+	// 		sender  : socket.username,
+	// 		message : message,
+	// 		date    : Date.now()
+	// 	});
+	// });
 
 
 	/* User Create newRoom */ 
@@ -122,14 +173,43 @@ io.on('connection', function(socket){
 		}
 	});
 
+	/* user disconnected */
+	socket.on("deleteSession",function(user){
+		users.splice(users.indexOf(socket.username) , 1);
+		socket.leave(socket.room);
+		//createdRoom=[]
+		socket.emit("leaveroom","leave room");
+		setTimeout(function(){
+			deleteFile();
+		},3000);
+	});
 
-
+/* functions to return all the connected rooms of current user */
+	function findRoomById(roomid) {
+		for (var key in roomId) {
+			if (roomId[key] == roomid) return key;
+		}
+		return false;
+	}
 
 	/* Get room id by room name */
 	function getRoomId(roomname){
 		var id="";
 		id=roomId[roomname]; //json lookup
 		return id;
+	}
+
+	/* delete file on socket disconnect */
+	function deleteFile(){
+
+		if (createdFiles.length === 0){
+		  	return;
+		}else{
+			createdFiles.forEach(function(filename) {
+			  	fs.unlink(filename);
+			});
+		} 
+	
 	}
 
 });
