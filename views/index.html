@@ -9,29 +9,20 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="javascripts/page.js"></script>
+        <script src="/javascripts/page.js"></script>
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row" style="background-color:rgba(0,0,0,0.3); margin-right : 0px; margin-left:0px; color:white;">     
-                <div class="nav navbar-nav navbar-right" style="margin-right : 5px;">
-                    <li><a href='#'> Your actual Name </a></li>     
-                </div>
-                <div class="container text-left" style ="margin-left:0px">
-                    <h4><img src = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Yonina_Tulip.jpg" class="test" style="padding:5px;"><span id="nickname"> Nickname</span></h4>
-                </div>
-            </div>
-
+            <% include nav.html %>    
             <nav class="navbar navbar-inverse">
                 <h2> Available Chat Rooms </h2>
             </nav>
-
             <div class="popover-markup"> 
                 <a href="#" id="changeName" class="trigger btn btn-primary" style="margin-bottom: 10px;">Change Name</a> 
-            <div id="hiding" style="display:none; border: 1px solid rgba(0,0,0,0.3);border-radius: 4px;">
-                <div class="head" style = "padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.3);border-width:100%;margin:10px;">
-                    <span class="glyphicon glyphicon-lock"></span>Change Name
-                </div>
+                <div id="hiding" style="display:none; border: 1px solid rgba(0,0,0,0.3);border-radius: 4px;">
+                    <div class="head" style = "padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.3);border-width:100%;margin:10px">
+                        <span class="glyphicon glyphicon-lock"></span>Change Name
+                    </div>
                     <div class="content" style="margin: 10px;">
                         <form role="form">
                             <div class="form-group">
@@ -51,12 +42,10 @@
                             </button>
                         </form>
                     </div>
-            </div> 
-        </div>
+                </div> 
+            </div>
             <!-- popove closes here -->
-
             <!-- Create new Room div -->
-
             <div class ="row" style="background-color:rgba(0,0,0,);text-align:center; padding:20px; margin-left:0px;margin-right:0px; border:1px solid rgba(0,0,0,0.0)">
                 <form class="form-horizontal" role="form">
                     <div class="alert alert-danger" style="display:none;width:40%;" id="roomerror"></div>
@@ -71,21 +60,23 @@
                 </form>
             </div>
 
-
-            <!-- Chat room divs -->
-
-            <div id="roomdiv">
-
-                <div class="row" id="roomappend" style="padding:0px; padding-bottom:20px;margin:0 auto" >
-                    <!-- append created room here -->
+            <div class="roomdiv" id="myroomdiv">
+                <h2> My rooms </h2>
+                    <!-- Chat room divs -->
+                <div class="row" id="roomappend" style="padding:2px; padding-bottom:10px;margin:0 auto" >
+                        <!-- append created room here -->
                 </div> 
-                <div class="row text-center" style="padding:0px; padding-bottom:20px;margin:0 auto">
-                    <div class="col-sm-4" id="eachroom">
+            </div>
+
+            <div class="roomdiv">
+                <h2>Popular rooms </h2>
+                <div class="row text-center" style="padding:0px; padding-bottom:15px;margin:0 auto">
+                    <div class="col-sm-4">
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQvp2BfK3GLL6Dt0jSMOFv4Hv6NjMENnMedstBzEsjFNXOTpqf2erYle5z"><hr>
                         <h1> Friends</h1>                  
                     </div>
                     <div class="col-sm-4">
-                       <img src="http://cdn.hercampus.com/s3fs-public/2016/12/11/News.jpg"><hr>
+                       <img src="http://www.vtc.edu/sites/default/files/news-3.jpg"><hr>
                         <h1> News</h1>     
                         
                     </div>
@@ -95,18 +86,18 @@
                     </div>       
                 </div>  
 
-                 <div class="row text-center" style="padding:0px; padding-bottom:20px;margin:0 auto">
+                <div class="row text-center" style="padding:0px; padding-bottom:15px;margin:0 auto">
                     <div class="col-sm-4">
-                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQvp2BfK3GLL6Dt0jSMOFv4Hv6NjMENnMedstBzEsjFNXOTpqf2erYle5z"><hr>
+                        <img src="http://wallpaper-gallery.net/images/family-images/family-images-21.jpg"><hr>
                         <h1> Family</h1>                  
                     </div>
                     <div class="col-sm-4">
-                       <img src="http://cdn.hercampus.com/s3fs-public/2016/12/11/News.jpg"><hr>
+                       <img src="https://chessdailynews.com/wp-content/uploads/2015/03/polgar_events2.jpg"><hr>
                         <h1> Events</h1>     
                         
                     </div>
                     <div class= "col-sm-4">
-                        <img src="http://www.jwmorris.co.uk/wp-content/uploads/2015/08/Science-Technology-banner-1500x585.jpg"><hr>
+                        <img src="https://citelighter-cards.s3.amazonaws.com/p17d98f5st15qd1tsv1m9c1sbu11uo0_64674.jpg"><hr>
                         <h1> Technology </h1>
                     </div>       
                 </div> 
@@ -120,13 +111,9 @@
                 <p class="small" style="padding:15px; font-size: 18px;"> All rights reserved. &copy; Shurakshya Kharel
                 </p>
             </div>
-
-
-<!-- Start of the modal for changing name -->
-
+            <!-- Start of the modal for changing name -->
             <div class="modal fade" id="nameModal" role="dialog">
                 <div class="modal-dialog">
-
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header" style="padding: 35px 50px;">
@@ -159,13 +146,11 @@
                                 data-dismiss="modal">
                                 <span class="glyphicon glyphicon-remove"></span> Cancel
                             </button>
-
                         </div>
                     </div>
-
                 </div>
             </div>
-    <!--End of the modal -->
+            <!--End of the modal -->
         </div>
     </body>
 </html>

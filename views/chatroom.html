@@ -2,92 +2,50 @@
 <html>
     <head>
         <title></title>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/room.css' />
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="javascripts/page.js"></script>
+        <script src="/javascripts/page.js"></script>
+        <script src="/javascripts/room.js"></script>
     </head>
-<body>
-    <div class="container-fluid">
-        <header class="text-center"> 
-            <h1>Welcome to Socket.io Chat App 
-            </h1>
-        </header>
-        <div class="main" id="main">
-            <div class="text-center">
-                <span id="rooms">
-                    <button class="btn btn-primary">Room1</button>
-                    <button class="btn btn-primary">Room2</button>
-                    <button class="btn btn-primary">Room3</button>
-                    <button class="btn btn-primary">Room4</button>
-                    <button class="btn btn-primary">Room5</button>
-                </span>
-
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-3 col-md-3 col-xs-3">
-                    <h3 id="yourName" class="text-center"></h3>
-                    <div class=" well text-center">
-                        <span>
-                            <button id="changeName" class="btn btn-primary">Change Name</button>
-                            <button id="changeRoom" class="btn btn-success">Change Room</button>
-                        </span>
+    <body>
+        <div class="container-fluid">
+            <% include nav.html %>
+            <nav class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" id="roomname">Room Name</a></li>
+                    <li><a href="/" id="changeRoom">Change Room</a></li>
+                </ul>            
+            </nav>        
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-sm-3">
+                    <div class = well>
+                        <h3> Online Users </h3>
+                        <ul id="onlineUsers">
+                        </ul>
                     </div>
-                    <h2 id="noofusers">Online Users</h2>
-                    <ul id="online_users">
-
-                    </ul>
                 </div>
+                <!-- chatdiv begin -->
                 <div class="col-sm-9 col-md-9 col-xs-9">
                     <div class="jumbotron">
                         <div class="text-center">
                             <p id="client_connected"></p>
                         </div>
                         <div id="chat_div">
-
                         </div>
                         <div id="chat_form">
-                            <form role="form" class="">
-                                <input id="message_input" type="text" class="form-control"  placeholder="type message.." />
+                            <form role="form" id="form">
+                                <input id="message_input" type="text" class="form-control"  autocomplete="off" placeholder="Type message.." />
                                 <button id="send_message_button" type="submit" class="btn btn-primary">Send</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <footer>
-            <p style="color:white; top:px; position:relative;"> &copy; All right reserved. Shurakshya Kharel </p>
-        </footer>
-
-      <!-- Modal -->
-      <div class="modal fade" id="myModal"  role="dialog" style="margin-top:40px">
-            <div class="modal-dialog">
-             <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" style="color:#fff" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Choose Name</h4>
-                    </div>
-                    <div class="modal-body">
-                        <input id="name" type="text" name="name" placeholder="Enter your name!">
-                        <button id="setName" type="button" name="button">Set Info</button>
-                    </div>
-                    <div class="modal-footer">
-                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-          
-            </div>
-      </div> <!--modal ends here-->
-    </div>
-
-    
-
-</body>
+        </div>      
+    </body>
 </html>

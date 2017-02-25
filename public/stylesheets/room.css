@@ -1,0 +1,87 @@
+body {
+  	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-image: url("http://cdn3.bigcommerce.com/r-2f88f07c87a534f827280ca29dcbb47af013d2e2/themes/GreaseMonkey/images/bg.jpg");
+	background-color:rgba(255, 255,255, 0.5);
+}
+.container-fluid{
+	width:90%; 
+	border-top : 4px solid black;
+	border-radius: 0px;
+	padding-right : 0px !important;
+	padding-left: 0px !important;
+	margin: auto;
+
+
+}
+.nav>li>a 
+{
+	padding-top: 25px !important;
+	padding :5px 5px;
+	font-size: 18px;
+	color:white;
+}
+h3{
+	margin-top: 8px !important;
+	color: #B6460F !important;
+	font-family: italic;
+	font-weight: bold;
+	border-bottom: 1px solid #A6A5A9;
+}
+.navbar-inverse{
+	background-color: transparent !important;
+	border-bottom:1px solid black ;
+	border-top: 1px solid black;
+	border-left: 0px !important;
+	border-right: 0px !important;
+	border-radius: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+#roomname ,#changeRoom{
+	color : red;
+}
+.well{
+	background: white !important;
+	border: white 2px 2px !important;
+}
+.jumbotron{
+	padding: 10px 10px !important;
+	margin: 0;
+	height: 520px;
+	min-height: 350px;
+	width: 100%;
+	background-color: #EAC779 !important;
+}
+
+#chat_div{
+	position: relative;
+	height: 400px;
+	background-color: white;
+	border: 2px solid gray;
+}
+#chat_form{
+	position: absolute;
+	bottom: 40px;
+	width: 80% !important;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto !important;
+
+}
+#message_input{
+	width: 90% !important;
+	display: inline;
+}
+#send_message_button{
+	display: inline;
+}
+.test {
+	position: relative;
+	width: 60px;
+	height: 60px;
+	background: transparent !important;
+	padding: 10px;
+	border-radius: 100%;
+	color: white;
+	text-align: center
+}

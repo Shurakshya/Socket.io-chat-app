@@ -17,6 +17,7 @@ body {
 
 .nav>li>a 
 {
+	padding-top: 25px !important;
 	padding :5px 5px;
 	font-size: 18px;
 	color:white;
@@ -31,8 +32,7 @@ a {
 /* mouse over link */
 /*a:hover {
     color: red;
-    
-    
+      
 }*/
 
 .test {
@@ -73,7 +73,7 @@ a {
 
 .navbar-inverse{
 	background-color: transparent !important;
-	border-bottom: transparent !important;
+	border-bottom:transparent !important;
 	border-top: 1px solid black;
 	border-left: 0px !important;
 	border-right: 0px !important;
@@ -94,7 +94,7 @@ a {
 img{
 	
 	height: 150px;
-	width:95%;
+	width:90%;
 }
 
 hr{
@@ -102,12 +102,21 @@ hr{
 	width: 100%;
 }
 
-#roomdiv{
+.roomdiv{
 	background-color:rgba(0,0,0,0.5); 
-	padding:20px;
-        font-style: italic;
+	padding:10px;
+    font-style: italic;
 	color:#b3b3b3;
+	margin-bottom : 10px;
 	
+
+}
+
+.roomdiv h2{
+	font-style: italic;
+	font-size: 40px;
+	padding: 5px;
+	margin: 5px;
 
 }
 .footer{
@@ -137,48 +146,7 @@ hr{
 
 
 
-/*footer{
-	background-color:#333333; 
-	text-align:center;
-	height:150px; 
-	padding:0px;
-	color: #fff;
-	bottom: 0;
-	position: fixed;
-	width : 100% ;
-}*/
 
-/*.well{
-	background: white !important;
-	border: white 2px 2px !important;
 
-}
-.jumbotron{
-	padding: 10px 10px !important;
-	margin: 0;
-	height: 520px;
-	min-height: 350px;
-	width: 100%;
-}
-#chat_div{
-	position: relative;
-	height: 400px;
-	background-color: white;
-	border: 2px solid gray;
-}
-#chat_form{
-	position: absolute;
-	bottom: 40px;
-	width: 80% !important;
-	left: 0px;
-	right: 0px;
-	margin: 0 auto !important;
 
-}
-#message_input{
-	width: 90% !important;
-	display: inline;
-}
-#send_message_button{
-	display: inline;
-}*/
+
