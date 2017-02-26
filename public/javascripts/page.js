@@ -206,7 +206,7 @@ $(document).ready(function() {
 
 		localStorage.removeItem('user');
 		socket.emit("deleteSession", user);
-		window.location.href = "http://localhost:3000";
+		window.location.href = "https://shuratalk.herokuapp.com";
 
 
 	});
