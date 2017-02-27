@@ -1,5 +1,7 @@
 var http = require('http').Server();
 var io = require('socket.io')(http);
+var util = require('util'); // node js file util
+
 var moment = require('moment');
 var fs = require('fs');
 var usersInCurrentRoom = []; //all the users in connected rooms  
@@ -23,7 +25,7 @@ var roomId = {
 };
 
 io.on('connection', function(socket) {
-
+	deleteFile();
 	/* login with new name first time */
 
 	socket.emit("createdRooms", createdRoom);
@@ -72,7 +74,7 @@ io.on('connection', function(socket) {
 			room = room.toLowerCase().replace(/\s/g, '');
 			// socket.join(room);
 			// socket.room = room;
-			joinedRooms.push(room);
+
 			socket.emit("roomSet", "you are now connected to : " + room);
 
 			/*emit room & roomid to client */
@@ -91,7 +93,7 @@ io.on('connection', function(socket) {
 		if (usersInCurrentRoom.indexOf(socket.username) === -1) {
 			usersInCurrentRoom.push(socket.username); // push the current user to array 
 		}
-
+		joinedRooms.push(room);
 		socket.join(room);
 		socket.room = room;
 
@@ -99,8 +101,10 @@ io.on('connection', function(socket) {
 		io.in(socket.room).emit("usersInCurrentRoom", usersInCurrentRoom);
 		console.log(usersInCurrentRoom);
 
-		/* read file line by line */
+		/* update to everyone that the user jas joined the room */
+		socket.broadcast.in(socket.room).emit("leaveOrJoin", socket.username + " has joined the room! ");
 
+		/* read file line by line */
 		var path = roomid + ".txt";
 		if (fs.existsSync(path)) {
 
@@ -186,25 +190,37 @@ io.on('connection', function(socket) {
 		}
 	});
 
+	/* change room */
+	socket.on("changeRoom", function(user) {
+		socket.broadcast.in(socket.room).emit("leaveOrJoin", socket.username + " has left the room! ");
+
+		if (usersInCurrentRoom.indexOf(socket.username) > -1) {
+			usersInCurrentRoom.splice(usersInCurrentRoom.indexOf(socket.username), 1); // remove the current user
+		}
+		joinedRooms.splice(joinedRooms.indexOf(socket.room), 1);
+		socket.leave(socket.room);
+
+		/* send all users inside the room */
+		io.in(socket.room).emit("usersInCurrentRoom", usersInCurrentRoom);
+	
+		console.log("usersInCurrentRoom :  " + usersInCurrentRoom);
+	});
+
 	/* user disconnected */
 	socket.on("deleteSession", function(user) {
 		socket.on('disconnect', function() {
 
-			socket.broadcast.in(socket.room).emit("leaveRoom", socket.username + " has left the room! ");
+			socket.broadcast.in(socket.room).emit("leaveOrJoin", socket.username + " has left the room! ");
 
 			if (usersInCurrentRoom.indexOf(socket.username) > -1) {
-				usersInCurrentRoom.splice(usersInCurrentRoom.indexOf(socket.username), 1); // push the current user to array 
+				usersInCurrentRoom.splice(usersInCurrentRoom.indexOf(socket.username), 1); // remove the current user 
 			}
 
 			users.splice(users.indexOf(socket.username), 1);
 			joinedRooms = [];
+			socket.leave(socket.room);
 			/* send all users inside the room */
 			io.in(socket.room).emit("usersInCurrentRoom", usersInCurrentRoom);
-
-			socket.leave(socket.room);
-
-			deleteFile();
-
 			console.log("usersInCurrentRoom :  " + usersInCurrentRoom);
 			console.log("total users : " + users);
 		});
@@ -235,10 +251,23 @@ io.on('connection', function(socket) {
 		} else {
 			createdFiles.forEach(function(filename) {
 				if (fs.existsSync(filename)) {
-					if (usersInCurrentRoom.length < 1 ) {
-						//to be handled
-						fs.unlink(filename);
-					}
+
+					fs.stat(filename, function(err, stats) {
+						var mtime = new Date(util.inspect(stats.mtime)); // get last modified time of file 
+						console.log('modified time : ' + mtime.getTime());
+						console.log("date : " + new Date().getTime());
+
+						var now = new Date().getTime();
+						var endTime = mtime.getTime() + 3600000; // set to 1 hr later than last modified time
+
+						// file will be deleted if online users in the room is 0 and last modiefied time reach 1 hr
+						if (usersInCurrentRoom.length == 0 && (now > endTime)) {
+							//to be handled
+							fs.unlink(filename);
+							console.log(filename + " deleted!");
+						}
+					});
+
 
 
 				}

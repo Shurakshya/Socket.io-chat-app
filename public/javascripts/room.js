@@ -1,14 +1,14 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
 	var socket = io();
 	var user = "";
 
 	/* show all previous message */
 
-	socket.on("previousMessage",function(previousMessage){
+	socket.on("previousMessage", function(previousMessage) {
 		console.log(previousMessage);
 
-		previousMessage.forEach(function(text){
+		previousMessage.forEach(function(text) {
 
 			$('#chat_div').prepend(text);
 		});
@@ -18,12 +18,12 @@ $(document).ready(function(){
 	if (localStorage.getItem("user") !== null) {
 		user = localStorage.getItem("user");
 		socket.emit('login', user);
-	
+
 
 		var url = window.location.href;
 		var roomid = (url.split('room/')[1]).replace(/\s/g, "");
-		var roomName = roomid.substr(0,roomid.length-3);
-		$('#roomname').html(roomName.toUpperCase());	
+		var roomName = roomid.substr(0, roomid.length - 3);
+		$('#roomname').html(roomName.toUpperCase());
 		console.log(user + "bahira");
 
 		/* send user and roomid to socket io */
@@ -38,13 +38,13 @@ $(document).ready(function(){
 		});
 
 		$("#form").submit(function() {
-			var input = $("#message_input").val();
+			var input = escapeHtml($("#message_input").val());
 			var timestamp = moment.utc(Date.now());
-			var message="<div style='margin:0;padding-left:10px;padding-right:10px'><span style='font-weight:bold;font-size:22px'>" + user + "</span>" + " : <span style='font-size:20px'>" + input+ "</span><span style='float:right'>" + timestamp.local().format('YYYY-MM-DD, hh:mm a') + "</span></div><hr>";
-			
+			var message = "<div style='margin:0;padding-left:10px;padding-right:10px'><span style='font-weight:bold;font-size:22px'>" + user + "</span>" + " : <span style='font-size:20px'>" + input + "</span><span style='float:right'>" + timestamp.local().format('YYYY-MM-DD, hh:mm a') + "</span></div><hr>";
+
 			if (input) {
 				socket.emit("message", input);
-				socket.emit("saveMessage",message,roomid);
+				socket.emit("saveMessage", message, roomid);
 			}
 			$("#message_input").val('');
 			return false;
@@ -52,34 +52,54 @@ $(document).ready(function(){
 
 		socket.on("chat", function(msg) {
 			var timestamp = moment.utc(msg.date); //
-			
-			var message="<div style='margin:0;padding-left:10px;padding-right:10px'><span style='font-weight:bold;font-size:22px'>" + msg.user + "</span>" + " : <span style='font-size:20px'>" + msg.message + "</span><span style='float:right'>" + timestamp.local().format('YYYY-MM-DD, hh:mm a') + "</span></div><hr>";
-			
+			console.log(msg.date + " : " + timestamp);
+
+			var message = "<div style='margin:0;padding-left:10px;padding-right:10px'><span style='font-weight:bold;font-size:22px'>" + msg.user + "</span>" + " : <span style='font-size:20px'>" + msg.message + "</span><span style='float:right'>" + timestamp.local().format('YYYY-MM-DD, hh:mm a') + "</span></div><hr>";
+
 			$('#chat_div').prepend(message);
 			// socket.emit("saveMessage",message,roomid);
-			
-		});
-
-
-		$("#logout").click(function(){
-
-				localStorage.removeItem('user');
-				socket.emit("deleteSession",user);
-				window.location.href = "https://shuratalk.herokuapp.com";
-	
 
 		});
 
-		socket.on("leaveRoom",function(message){
+		/* changeRoom */
+		$("#changeRoom").click(function(){
+			socket.emit("changeRoom", user);
+		});
+
+		$("#logout").click(function() {
+
+			localStorage.removeItem('user');
+			socket.emit("deleteSession", user);
+			window.location.href = "https://shuratalk.herokuapp.com/";
+
+
+		});
+
+		socket.on("leaveOrJoin", function(message) {
 			$("#leaveNote").html(message);
-			$("#leaveNote").css("color","red");
+			$("#leaveNote").css("color", "red");
 
-			setTimeout(function(){
+			setTimeout(function() {
 				$("#leaveNote").html('');
-			},4000);
+			}, 4000);
 		});
 
-	}else{
+		/* escape html entities for preventing XXS */
+		function escapeHtml(text) {
+			var map = {
+				'&': '&amp;',
+				'<': '&lt;',
+				'>': '&gt;',
+				'"': '&quot;',
+				"'": '&#039;'
+			};
+
+			return text.replace(/[&<>"']/g, function(m) {
+				return map[m];
+			});
+		}
+
+	} else {
 		$("#nickname").html("Please Login !!!");
 	}
 
