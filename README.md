@@ -1,4 +1,4 @@
-#Chat app written in node.js and socket.io
+Chat app written in node.js and socket.io
 ## Libraries used
     node.js / npm
     socket.io
